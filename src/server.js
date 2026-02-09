@@ -53,8 +53,11 @@ const limiter = rateLimit({
 
 app.use('/api/', limiter);
 
-// Static files - serve frontend from parent directory
-app.use(express.static(path.join(__dirname, '../../frontend')));
+// Static files - only for local development
+// In production (Vercel), frontend should be deployed separately
+if (process.env.NODE_ENV !== 'production') {
+    app.use(express.static(path.join(__dirname, '../../frontend')));
+}
 
 // ========================================
 // ROUTES
@@ -72,10 +75,21 @@ app.get('/api/health', (req, res) => {
 // Learning API routes
 app.use('/api', learningRouter);
 
-// Serve frontend
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+// Serve frontend - only in development
+if (process.env.NODE_ENV !== 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../../frontend/index.html'));
+    });
+} else {
+    // In production, return a simple message for non-API routes
+    app.get('*', (req, res) => {
+        res.json({
+            success: true,
+            message: 'Learning Tool API',
+            documentation: '/api/health'
+        });
+    });
+}
 
 // ========================================
 // ERROR HANDLING
