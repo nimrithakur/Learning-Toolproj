@@ -88,7 +88,7 @@ app.listen(PORT, () => {
 ║                                                           ║
 ║   📍 URL: http://localhost:${PORT}                       ║
 ║   🌍 Environment: ${process.env.NODE_ENV || 'development'}               ║
-║   🤖 AI Model: ${process.env.AI_MODEL || 'gemini-2.5-flash'}           ║
+║   🤖 AI Model: ${process.env.AI_MODEL || 'gemini-1.5-flash'}           ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
     `);

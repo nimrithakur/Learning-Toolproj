@@ -13,7 +13,7 @@ Set these in your Vercel project settings:
 ```env
 GEMINI_API_KEY=your-google-gemini-api-key
 NODE_ENV=production
-AI_MODEL=gemini-2.5-flash
+AI_MODEL=gemini-1.5-flash
 AI_TEMPERATURE=0.7
 MAX_TOKENS=2000
 CACHE_TTL=3600
