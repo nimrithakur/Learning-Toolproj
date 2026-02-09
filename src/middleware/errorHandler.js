@@ -4,7 +4,10 @@ import { logger } from '../utils/logger.js';
  * Global error handler middleware
  */
 export const errorHandler = (err, req, res, next) => {
-    // Log the full error for debugging
+    // Log the full error for debugging - console.error for Vercel logs
+    console.error('Error occurred:', err);
+    console.error('Error message:', err.message);
+    console.error('Error stack:', err.stack);
     logger.error('Error occurred:', err);
     logger.error('Error details:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
 

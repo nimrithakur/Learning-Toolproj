@@ -16,16 +16,27 @@ export class AIService {
         if (!this.model) {
             const apiKey = process.env.GEMINI_API_KEY;
             
+            console.log('Initializing Gemini AI...');
+            console.log('API Key exists:', !!apiKey);
+            console.log('AI Model:', process.env.AI_MODEL || 'gemini-2.0-flash-exp');
+            
             if (!apiKey) {
+                console.error('GEMINI_API_KEY is not set in environment variables');
                 throw new Error('GEMINI_API_KEY is not set in environment variables');
             }
 
-            this.genAI = new GoogleGenerativeAI(apiKey);
-            this.model = this.genAI.getGenerativeModel({ 
-                model: process.env.AI_MODEL || 'gemini-2.0-flash-exp'
-            });
+            try {
+                this.genAI = new GoogleGenerativeAI(apiKey);
+                this.model = this.genAI.getGenerativeModel({ 
+                    model: process.env.AI_MODEL || 'gemini-2.0-flash-exp'
+                });
 
-            logger.info('Google Gemini client initialized');
+                console.log('Google Gemini client initialized successfully');
+                logger.info('Google Gemini client initialized');
+            } catch (error) {
+                console.error('Error initializing Gemini:', error);
+                throw error;
+            }
         }
     }
 
@@ -59,6 +70,9 @@ export class AIService {
             };
 
         } catch (error) {
+            console.error('AI processing error:', error);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
             logger.error('AI processing error:', error);
             logger.error('Error details:', error.message, error.stack);
             
