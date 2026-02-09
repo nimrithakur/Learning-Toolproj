@@ -22,7 +22,7 @@ export class AIService {
 
             this.genAI = new GoogleGenerativeAI(apiKey);
             this.model = this.genAI.getGenerativeModel({ 
-                model: process.env.AI_MODEL || 'gemini-1.5-flash'
+                model: process.env.AI_MODEL || 'gemini-2.0-flash-exp'
             });
 
             logger.info('Google Gemini client initialized');
