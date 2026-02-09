@@ -7,12 +7,19 @@ import rateLimit from 'express-rate-limit';
 import learningRouter from './routes/learning.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
-// Load environment variables
-dotenv.config();
-
 // ES Module __dirname alternative
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load environment variables - for local development
+// Vercel will use environment variables from dashboard
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
+// Log environment status for debugging
+console.log('Environment check:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('GEMINI_API_KEY exists:', !!process.env.GEMINI_API_KEY);
+console.log('AI_MODEL:', process.env.AI_MODEL);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
